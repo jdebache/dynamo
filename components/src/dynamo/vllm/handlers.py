@@ -299,8 +299,11 @@ class DecodeWorkerHandler(BaseWorkerHandler):
         # Extract and decode multimodal data if present
         multi_modal_data = await self._extract_multimodal_data(request)
 
+        token_ids = request["token_ids"]
+        logger.info(f"Passing token IDs to vLLM decode (request {request_id}): {token_ids}")
+        
         prompt = TokensPrompt(
-            prompt_token_ids=request["token_ids"], multi_modal_data=multi_modal_data
+            prompt_token_ids=token_ids, multi_modal_data=multi_modal_data
         )
 
         # Build sampling params from request
@@ -374,6 +377,8 @@ class PrefillWorkerHandler(BaseWorkerHandler):
         multi_modal_data = await self._extract_multimodal_data(request)
 
         token_ids = request["token_ids"]
+        logger.info(f"Passing token IDs to vLLM prefill (request {request_id}): {token_ids}")
+        
         prompt = TokensPrompt(
             prompt_token_ids=token_ids, multi_modal_data=multi_modal_data
         )

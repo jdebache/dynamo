@@ -30,7 +30,7 @@ impl Encoder for HuggingFaceTokenizer {
         // This self.tokenizer is the library
         let encoding = self
             .tokenizer
-            .encode(input, false)
+            .encode(input, true)
             .map_err(|err| Error::msg(format!("Error tokenizing input: {err}")))?;
 
         Ok(Encoding::Hf(Box::new(encoding)))

@@ -33,12 +33,6 @@ impl Encoder for HuggingFaceTokenizer {
             .encode(input, add_special_tokens)
             .map_err(|err| Error::msg(format!("Error tokenizing input: {err}")))?;
 
-        tracing::info!(
-            input = %input,
-            token_ids = ?encoding.get_ids(),
-            "Tokenized input"
-        );
-
         Ok(Encoding::Hf(Box::new(encoding)))
     }
 

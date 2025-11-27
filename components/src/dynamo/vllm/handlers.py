@@ -299,7 +299,7 @@ class DecodeWorkerHandler(BaseWorkerHandler):
         # Extract and decode multimodal data if present
         multi_modal_data = await self._extract_multimodal_data(request)
 
-        token_ids = request["token_ids"] + [2]
+        token_ids = request["token_ids"]
         
         prompt = TokensPrompt(
             prompt_token_ids=token_ids, multi_modal_data=multi_modal_data
@@ -375,7 +375,7 @@ class PrefillWorkerHandler(BaseWorkerHandler):
         # Extract and decode multimodal data if present
         multi_modal_data = await self._extract_multimodal_data(request)
 
-        token_ids = request["token_ids"] + [2]
+        token_ids = request["token_ids"]
         
         prompt = TokensPrompt(
             prompt_token_ids=token_ids, multi_modal_data=multi_modal_data

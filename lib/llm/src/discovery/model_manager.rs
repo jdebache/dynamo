@@ -523,6 +523,12 @@ impl<E> ModelEngines<E> {
     }
 
     fn get(&self, model: &str) -> Option<&E> {
+        let available_models: Vec<String> = self.engines.keys().map(|k| k.to_owned()).collect();
+        tracing::info!(
+            model = %model,
+            available_models = ?available_models,
+            "Getting model engine"
+        );
         self.engines.get(model)
     }
 

@@ -144,6 +144,7 @@ class BaseWorkerHandler(ABC):
         model_max_len: int | None = None,
         enable_multimodal: bool = False,
         use_vllm_tokenizer: bool = False,
+        served_model_name: str | None = None,
     ):
         self.runtime = runtime
         self.component = component
@@ -156,6 +157,7 @@ class BaseWorkerHandler(ABC):
         self.model_max_len = model_max_len
         self.enable_multimodal = enable_multimodal
         self.use_vllm_tokenizer = use_vllm_tokenizer
+        self.served_model_name = served_model_name or "unknown"
 
         # Initialize InputParamManager for text-in-text-out mode
         tokenizer = None
@@ -347,6 +349,7 @@ class DecodeWorkerHandler(BaseWorkerHandler):
         model_max_len: int | None = None,
         enable_multimodal: bool = False,
         use_vllm_tokenizer: bool = False,
+        served_model_name: str | None = None,
     ):
         super().__init__(
             runtime,
@@ -356,6 +359,7 @@ class DecodeWorkerHandler(BaseWorkerHandler):
             model_max_len,
             enable_multimodal,
             use_vllm_tokenizer,
+            served_model_name,
         )
 
     async def generate(self, request, context):
@@ -459,7 +463,7 @@ class DecodeWorkerHandler(BaseWorkerHandler):
                             "id": openai_request_id,
                             "created": int(time.time()),
                             "object": "chat.completion.chunk",
-                            "model": "unknown",
+                            "model": self.served_model_name,
                             "choices": [
                                 {
                                     "index": 0,
@@ -488,7 +492,7 @@ class DecodeWorkerHandler(BaseWorkerHandler):
                         "id": openai_request_id,
                         "created": int(time.time()),
                         "object": "chat.completion.chunk",
-                        "model": "unknown",
+                        "model": self.served_model_name,
                         "choices": [choice_data],
                     }
 
@@ -511,6 +515,7 @@ class PrefillWorkerHandler(BaseWorkerHandler):
         model_max_len: int | None = None,
         enable_multimodal: bool = False,
         use_vllm_tokenizer: bool = False,
+        served_model_name: str | None = None,
     ):
         super().__init__(
             runtime,
@@ -520,6 +525,7 @@ class PrefillWorkerHandler(BaseWorkerHandler):
             model_max_len,
             enable_multimodal,
             use_vllm_tokenizer,
+            served_model_name,
         )
 
     async def generate(self, request, context):

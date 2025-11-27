@@ -319,6 +319,7 @@ async def init_prefill(runtime: DistributedRuntime, config: Config):
         getattr(getattr(vllm_config, "model_config", None), "max_model_len", None),
         enable_multimodal=config.enable_multimodal,
         use_vllm_tokenizer=config.use_vllm_tokenizer,
+        served_model_name=config.served_model_name,
     )
     handler.add_temp_dir(prometheus_temp_dir)
 
@@ -455,6 +456,7 @@ async def init(runtime: DistributedRuntime, config: Config):
         getattr(getattr(vllm_config, "model_config", None), "max_model_len", None),
         enable_multimodal=config.enable_multimodal,
         use_vllm_tokenizer=config.use_vllm_tokenizer,
+        served_model_name=config.served_model_name,
     )
     handler.add_temp_dir(prometheus_temp_dir)
 

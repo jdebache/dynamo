@@ -745,7 +745,9 @@ async def init_multimodal_worker(runtime: DistributedRuntime, config: Config):
 
 
 def main():
-    uvloop.run(worker())
+    import memray
+    with memray.Tracker(destination=memray.SocketDestination(5557)):
+        uvloop.run(worker())
 
 
 if __name__ == "__main__":

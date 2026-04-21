@@ -27,7 +27,7 @@ from vllm.entrypoints.openai.completion.serving import OpenAIServingCompletion
 from vllm.entrypoints.openai.engine.protocol import RequestResponseMetadata
 from vllm.entrypoints.openai.models.protocol import BaseModelPath
 from vllm.entrypoints.openai.models.serving import OpenAIServingModels
-from vllm.inputs.data import TokensPrompt
+from vllm.inputs import TokensPrompt
 from vllm.renderers.registry import renderer_from_config
 from vllm.sampling_params import SamplingParams
 from vllm.tokenizers import TokenizerLike as AnyTokenizer

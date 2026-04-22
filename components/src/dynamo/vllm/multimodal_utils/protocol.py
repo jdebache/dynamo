@@ -24,7 +24,10 @@ from pydantic_core import core_schema
 from typing_extensions import NotRequired
 from vllm.inputs import TokensPrompt
 from vllm.logprobs import PromptLogprobs
-from vllm.multimodal.inputs import MultiModalUUIDDict  # noqa: F401
+try:
+    from vllm.inputs import MultiModalUUIDDict  # noqa: F401
+except ImportError:
+    from vllm.multimodal.inputs import MultiModalUUIDDict  # noqa: F401
 from vllm.outputs import CompletionOutput
 from vllm.sampling_params import SamplingParams
 from vllm.v1.metrics.stats import RequestStateStats
